@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.example.demo.controller.ProdutoController;
-
 @Component
 public class CrudRegistry implements ApplicationListener<ApplicationReadyEvent> {
 

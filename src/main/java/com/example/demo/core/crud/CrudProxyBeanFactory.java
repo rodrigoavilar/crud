@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.demo.core.crud.controller.CrudBaseController;
 import com.example.demo.core.crud.controller.CrudControllerProxy;
 
 public class CrudProxyBeanFactory {
@@ -23,6 +24,7 @@ public class CrudProxyBeanFactory {
 		if (proxy == null) {
 			CrudControllerProxy crudProxy = new CrudControllerProxy();
 			crudProxy.setCrud(crud);
+			crudProxy.setCrudBaseController(new CrudBaseController());
 			proxy = Proxy.newProxyInstance(classLoader, new Class[] { clazz }, crudProxy);
 			proxies.put(crud.value(), proxy);
 			mapeador.add(crud.value(), clazz);
