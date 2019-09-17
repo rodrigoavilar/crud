@@ -4,6 +4,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.core.crud.CRUD;
+
 @Component
 public class CRUDAnnotationProcessor implements BeanPostProcessor {
 

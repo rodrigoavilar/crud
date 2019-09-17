@@ -1,9 +1,11 @@
-package com.example.demo;
+package com.example.demo.core.crud.controller;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class CrudProxy implements InvocationHandler {
+import com.example.demo.core.crud.CRUD;
+
+public class CrudControllerProxy implements InvocationHandler {
 
 	private CRUD crud;
 

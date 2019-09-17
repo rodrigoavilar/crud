@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.core.crud.controller;
 
 import java.io.Serializable;
 
@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.example.demo.core.BusinessException;
+import com.example.demo.core.Model;
+import com.example.demo.core.ModelDTO;
 
 public interface CrudController<M extends Model<T>, T extends Serializable, D extends ModelDTO> {
 

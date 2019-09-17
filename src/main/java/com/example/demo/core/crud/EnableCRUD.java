@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.core.crud;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

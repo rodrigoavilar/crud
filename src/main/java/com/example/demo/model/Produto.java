@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.model;
+
+import com.example.demo.core.Model;
 
 public class Produto extends Model<Integer> {
 
