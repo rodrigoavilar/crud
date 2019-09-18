@@ -14,6 +14,8 @@ public class Produto extends Model<Integer> {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	private String descricao;
+	
 	@Override
 	public Integer getId() {
 		return id;
@@ -23,5 +25,15 @@ public class Produto extends Model<Integer> {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	
 
 }
