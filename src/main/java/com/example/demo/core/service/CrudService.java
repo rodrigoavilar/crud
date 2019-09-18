@@ -21,21 +21,25 @@ import com.example.demo.core.repository.CrudBaseRepository;
  * @param <T> ID type.
  * @author Virtus
  */
-public abstract class CrudService<M extends Model<T>, T extends Serializable> extends SearchService<M, T> {
+public class CrudService extends SearchService {
+	
+	private CrudBaseRepository<Model<Serializable>, Serializable> repository;
 
-    /**
-     * Gets the model CRUD Repository.
-     *
-     * @return CRUD Repository.
-     */
-    protected abstract CrudBaseRepository<M, T> getRepository();
 
-    /**
+    public CrudBaseRepository<Model<Serializable>, Serializable> getRepository() {
+		return repository;
+	}
+
+	public void setRepository(CrudBaseRepository<Model<Serializable>, Serializable> repository) {
+		this.repository = repository;
+	}
+
+	/**
      * Execution before the insert operation.
      *
      * @param model Model.
      */
-    public M preInsert(M model) throws BusinessException {
+    public Model<Serializable> preInsert(Model<Serializable> model) throws BusinessException {
         return model;
     }
     
@@ -45,7 +49,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @param model Model.
      * @throws BusinessException If some rule is not acceptable.
      */
-    public void validateInsert(M model) throws BusinessException {
+    public void validateInsert(Model<Serializable> model) throws BusinessException {
 
     }
 
@@ -56,7 +60,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @throws BusinessException If some rule is not acceptable.
      */
     @Transactional
-    public M insert(M model) throws BusinessException {
+    public Model<Serializable> insert(Model<Serializable> model) throws BusinessException {
         model = preInsert(model);
 
         validateInsert(model);
@@ -69,7 +73,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      *
      * @param model Model.
      */
-    public M preUpdate(M model) throws BusinessException {
+    public Model<Serializable> preUpdate(Model<Serializable> model) throws BusinessException {
         return model;
     }
 
@@ -79,7 +83,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @param model Model.
      * @throws BusinessException If some rule is not acceptable.
      */
-    public void validateUpdate(M model) throws BusinessException {
+    public void validateUpdate(Model<Serializable> model) throws BusinessException {
 
     }
 
@@ -91,7 +95,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @throws BusinessException If some rule is not acceptable.
      */
     @Transactional
-    public void update(T id, M model) throws BusinessException {
+    public void update(Serializable id, Model<Serializable> model) throws BusinessException {
         model = preUpdate(model);
 
         validateUpdate(model);
@@ -104,7 +108,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      *
      * @param id ID.
      */
-    public void preDelete(T id) throws BusinessException {
+    public void preDelete(Serializable id) throws BusinessException {
     	
     }
     
@@ -114,7 +118,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @param id ID.
      * @throws BusinessException If some rule is not acceptable.
      */
-    public void validateDelete(T id) throws BusinessException {
+    public void validateDelete(Serializable id) throws BusinessException {
 
     }
 
@@ -125,7 +129,7 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @throws BusinessException If some rule is not acceptable.
      */
     @Transactional
-    public void delete(T id) throws BusinessException {
+    public void delete(Serializable id) throws BusinessException {
         validateDelete(id);
 
         preDelete(id);
@@ -141,8 +145,8 @@ public abstract class CrudService<M extends Model<T>, T extends Serializable> ex
      * @throws BusinessException 
      * 		If some rule is not acceptable.
      */
-    public void delete(List<T> ids) throws BusinessException {
-    	for (T id : ids) {
+    public void delete(List<Serializable> ids) throws BusinessException {
+    	for (Serializable id : ids) {
     		this.delete(id);
     	}
     }

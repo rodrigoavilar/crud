@@ -1,6 +1,7 @@
 package com.example.demo.core.crud.controller;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.demo.core.BusinessException;
 import com.example.demo.core.Model;
@@ -27,7 +29,7 @@ public interface CrudController<M extends Model<T>, T extends Serializable, D ex
     public D getOne(HttpServletRequest request, @PathVariable T id);
     
 	@PostMapping
-	ResponseEntity<D> insert(HttpServletRequest request, @Valid @RequestBody D modelDTO) throws BusinessException;
+	ResponseEntity<D> insert(HttpServletRequest request, @Valid @RequestBody D modelDTO, @RequestHeader("Accept-Language") Locale locale) throws BusinessException;
 
 	@PutMapping("/{id}")
 	ResponseEntity<D> update(HttpServletRequest request, @Valid @PathVariable T id, @RequestBody D modelDTO) throws BusinessException;

@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.demo.core.BusinessException;
+import com.example.demo.core.Model;
 import com.example.demo.core.ModelDTO;
+import com.example.demo.core.service.CrudService;
+import com.example.demo.core.util.NullAwareBeanUtils;
 //import com.example.demo.core.service.CrudService;
 //import com.example.demo.core.util.NullAwareBeanUtils;
 
@@ -35,15 +38,25 @@ import com.example.demo.core.ModelDTO;
  * @author Virtus
  */
 public class CrudBaseController extends SearchBaseController {
+	
+	private CrudService service;
+	
+	
 
     /**
      * Gets the model CRUD service.
      *
      * @return Model CRUD service.
      */
-//    protected abstract CrudService<M, T> getService();
+    public CrudService getService() {
+		return service;
+	}
 
-    /**
+	public void setService(CrudService service) {
+		this.service = service;
+	}
+
+	/**
      * Inserts the model instance.
      *
      * @param modelDTO Model DTO.
@@ -53,9 +66,8 @@ public class CrudBaseController extends SearchBaseController {
     @PostMapping
     public ResponseEntity<ModelDTO> insert(HttpServletRequest request, @Valid @RequestBody ModelDTO modelDTO, @RequestHeader("Accept-Language") Locale locale) {
         try {
-        	return null; 
-//            M model = getService().insert(toModel(modelDTO));
-//            return created(toDTO(model));
+            Model<Serializable> model = getService().insert(toModel(modelDTO));
+            return created(toDTO(model));
         } catch (Exception e) {
             return notAcceptable(locale, e);
         }
@@ -72,7 +84,7 @@ public class CrudBaseController extends SearchBaseController {
     @PutMapping("/{id}")
     public ResponseEntity<ModelDTO> update(HttpServletRequest request, @Valid @PathVariable Serializable id, @RequestBody ModelDTO modelDTO, @RequestHeader("Accept-Language") Locale locale) {
         try {
-//            getService().update(id, toModel(modelDTO));
+            getService().update(id, toModel(modelDTO));
             return ok(modelDTO);
         } catch (Exception e) {
             return notAcceptable(locale, e);
@@ -90,10 +102,10 @@ public class CrudBaseController extends SearchBaseController {
     @PatchMapping("/{id}")
     public ResponseEntity<ModelDTO> updatePartial(HttpServletRequest request, @PathVariable Serializable id, @RequestBody ModelDTO modelDTO, @RequestHeader("Accept-Language") Locale locale) {
         try {
-//            M model = toModel(modelDTO);
-//            M dbModel = getService().getOne(id);
-//            NullAwareBeanUtils.getInstance().copyProperties(dbModel, model);
-//            getService().update(id, dbModel);
+        	Model<Serializable> model = toModel(modelDTO);
+        	Model<Serializable> dbModel = getService().getOne(id);
+            NullAwareBeanUtils.getInstance().copyProperties(dbModel, model);
+            getService().update(id, dbModel);
             return ok(modelDTO);
         } catch (Exception e) {
             return notAcceptable(locale, e);
@@ -109,7 +121,7 @@ public class CrudBaseController extends SearchBaseController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(HttpServletRequest request, @PathVariable Serializable id) throws BusinessException {
-//        getService().delete(id);
+        getService().delete(id);
 
         return success();
     }

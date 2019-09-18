@@ -26,6 +26,8 @@ import com.example.demo.core.util.MessageUtil;
  * @author Virtus
  */
 public abstract class BaseController {
+	
+	
 
 	/**
 	 * Logger.

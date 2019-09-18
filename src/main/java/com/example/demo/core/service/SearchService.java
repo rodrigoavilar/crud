@@ -19,14 +19,14 @@ import com.example.demo.core.repository.SearchBaseRepository;
  * @param <M> Model type.
  * @param <T> ID type.
  */
-public abstract class SearchService<M extends Model<T>, T extends Serializable> extends BaseService {
+public abstract class SearchService extends BaseService {
 
 	/**
 	 * Gets the search Repository.
 	 * 
 	 * @return Search Repository.
 	 */
-	protected abstract SearchBaseRepository<M, T> getRepository();
+	protected abstract SearchBaseRepository<Model<Serializable>,Serializable> getRepository();
 	
 	/**
 	 * Searches the model with the filter.
@@ -46,7 +46,7 @@ public abstract class SearchService<M extends Model<T>, T extends Serializable> 
 	 * 		ID.
 	 * @return Instance founded.
 	 */
-	public M getOne(T id) {
+	public Model<Serializable> getOne(Serializable id) {
 		return getRepository().findById(id).get();
 	}
 }

@@ -15,10 +15,9 @@ import com.example.demo.core.Model;
 import com.example.demo.core.ModelDTO;
 import com.example.demo.core.PageListDTO;
 import com.example.demo.core.SearchFilterDTO;
+import com.example.demo.core.service.SearchService;
 //import com.example.demo.core.service.SearchService;
 import com.example.demo.core.util.JSonUtil;
-
-import net.jodah.typetools.TypeResolver;
 
 /**
  * The 'SearchBaseController' class provides the common API for controllers
@@ -40,6 +39,9 @@ import net.jodah.typetools.TypeResolver;
  * @author Virtus
  */
 public abstract class SearchBaseController extends BaseController {
+	
+	private Class<Model<Serializable>> modelClass; 
+	private Class<ModelDTO> dtoClass;
 
 	/**
 	 * Index order of the Model class in generics declaration. 
@@ -56,7 +58,7 @@ public abstract class SearchBaseController extends BaseController {
      *
      * @return Model search service.
      */
-//    protected abstract SearchService<M, T> getService();
+    protected abstract SearchService getService();
 
     /**
      * Searchs the model with the filter.
@@ -135,8 +137,7 @@ public abstract class SearchBaseController extends BaseController {
      * @return Pageable List.
      */
     protected PageListDTO searchInService(HttpServletRequest request, SearchFilterDTO filter) {
-    	return null;
-//    	return getService().search(filter);
+    	return getService().search(filter);
     }
     
     /**
@@ -146,8 +147,7 @@ public abstract class SearchBaseController extends BaseController {
      * @return Model instance founded.
      */
     protected Model<Serializable> getOneModel(Serializable id) {
-    	return null;
-//    	return getService().getOne(id);
+    	return getService().getOne(id);
     }
 
     /**
@@ -185,9 +185,8 @@ public abstract class SearchBaseController extends BaseController {
      * 
      * @return Model class.
      */
-    @SuppressWarnings("unchecked")
 	protected Class<Model<Serializable>> getModelClass() {
-    	return (Class<Model<Serializable>>) getTypeArg()[MODEL_INDEX_ORDER];
+    	return modelClass;
     }
     
     /**
@@ -195,17 +194,18 @@ public abstract class SearchBaseController extends BaseController {
      * 
      * @return DTO class.
      */
-    @SuppressWarnings("unchecked")
 	protected Class<ModelDTO> getDTOClass() {
-    	return (Class<ModelDTO>) getTypeArg()[DTO_INDEX_ORDER];
+    	return dtoClass;
     }
+
+	public void setModelClass(Class<Model<Serializable>> modelClass) {
+		this.modelClass = modelClass;
+	}
+
+	public void setDtoClass(Class<ModelDTO> dtoClass) {
+		this.dtoClass = dtoClass;
+	}
+	
+	
     
-    /**
-     * Gets the type args of the class.
-     * 
-     * @return Type args.
-     */
-    protected Class<?>[] getTypeArg() {
-    	return TypeResolver.resolveRawArguments(SearchBaseController.class, getClass());
-    }
 }
